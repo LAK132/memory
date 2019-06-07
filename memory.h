@@ -425,7 +425,7 @@ namespace lak
     memory &memory::write(std::vector<uint8_t> &bytes)
     {
         insert(bytes.size());
-        std::memcpy(data(), bytes.data(), bytes.size());
+        std::memcpy(get(), bytes.data(), bytes.size());
         return *this;
     }
 
@@ -436,7 +436,7 @@ namespace lak
 
     std::string memory::read_string(size_t max_len)
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         if (_begin == nullptr) return std::string();
         const uint8_t *_end = _begin;
         if (max_len < SIZE_MAX / sizeof(char))
@@ -448,7 +448,7 @@ namespace lak
 
     std::string memory::read_string_exact(size_t exact_len)
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         position += exact_len * sizeof(char);
         if (_begin == nullptr) return std::string();
         const uint8_t *_end = _begin + std::min(exact_len * sizeof(char), remaining());
@@ -457,7 +457,7 @@ namespace lak
 
     std::string memory::peek_string(size_t max_len) const
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         if (_begin == nullptr) return std::string();
         const uint8_t *_end = _begin;
         if (max_len < SIZE_MAX / sizeof(char))
@@ -471,13 +471,13 @@ namespace lak
     {
         const size_t str_len = (str.size() + (terminate ? 1 : 0)) * sizeof(char);
         insert(str_len);
-        WriteString(data(), str, terminate, endian);
+        WriteString(get(), str, terminate, endian);
         return *this;
     }
 
     u8string memory::read_u8string(size_t max_len)
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         if (_begin == nullptr) return u8string();
         const uint8_t *_end = _begin;
         if (max_len < SIZE_MAX / sizeof(char8_t))
@@ -489,7 +489,7 @@ namespace lak
 
     u8string memory::read_u8string_exact(size_t exact_len)
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         position += exact_len * sizeof(char8_t);
         if (_begin == nullptr) return u8string();
         const uint8_t *_end = _begin + std::min(exact_len * sizeof(char), remaining());
@@ -498,7 +498,7 @@ namespace lak
 
     u8string memory::peek_u8string(size_t max_len) const
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         if (_begin == nullptr) return u8string();
         const uint8_t *_end = _begin;
         if (max_len < SIZE_MAX / sizeof(char8_t))
@@ -512,13 +512,13 @@ namespace lak
     {
         const size_t str_len = (str.size() + (terminate ? 1 : 0)) * sizeof(char8_t);
         insert(str_len);
-        WriteString(data(), str, terminate, endian);
+        WriteString(get(), str, terminate, endian);
         return *this;
     }
 
     std::u16string memory::read_u16string(size_t max_len)
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         if (_begin == nullptr) return std::u16string();
         const uint8_t *_end = _begin;
         if (max_len < SIZE_MAX / sizeof(char16_t))
@@ -530,7 +530,7 @@ namespace lak
 
     std::u16string memory::read_u16string_exact(size_t exact_len)
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         position += exact_len * sizeof(char16_t);
         if (_begin == nullptr) return std::u16string();
         const uint8_t *_end = _begin + std::min(exact_len * sizeof(char16_t), remaining());
@@ -539,7 +539,7 @@ namespace lak
 
     std::u16string memory::peek_u16string(size_t max_len) const
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         if (_begin == nullptr) return std::u16string();
         const uint8_t *_end = _begin;
         if (max_len < SIZE_MAX / sizeof(char16_t))
@@ -553,13 +553,13 @@ namespace lak
     {
         const size_t str_len = (str.size() + (terminate ? 1 : 0)) * sizeof(char16_t);
         insert(str_len);
-        WriteString(data(), str, terminate, endian);
+        WriteString(get(), str, terminate, endian);
         return *this;
     }
 
     std::u32string memory::read_u32string(size_t max_len)
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         if (_begin == nullptr) return std::u32string();
         const uint8_t *_end = _begin;
         if (max_len < SIZE_MAX / sizeof(char32_t))
@@ -571,7 +571,7 @@ namespace lak
 
     std::u32string memory::read_u32string_exact(size_t exact_len)
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         position += exact_len * sizeof(char32_t);
         if (_begin == nullptr) return std::u32string();
         const uint8_t *_end = _begin + std::min(exact_len * sizeof(char32_t), remaining());
@@ -580,7 +580,7 @@ namespace lak
 
     std::u32string memory::peek_u32string(size_t max_len) const
     {
-        const uint8_t *_begin = data();
+        const uint8_t *_begin = get();
         if (_begin == nullptr) return std::u32string();
         const uint8_t *_end = _begin;
         if (max_len < SIZE_MAX / sizeof(char32_t))
@@ -594,144 +594,144 @@ namespace lak
     {
         const size_t str_len = (str.size() + (terminate ? 1 : 0)) * sizeof(char32_t);
         insert(str_len);
-        WriteString(data(), str, terminate, endian);
+        WriteString(get(), str, terminate, endian);
         return *this;
     }
 
     uint8_t memory::read_u8(const uint8_t def)
     {
-        return ReadInt<uint8_t>(data(), endian, &position, def);
+        return ReadInt<uint8_t>(get(), endian, &position, def);
     }
 
     uint8_t memory::peek_u8(const uint8_t def) const
     {
-        return ReadInt<uint8_t>(data(), endian, nullptr, def);
+        return ReadInt<uint8_t>(get(), endian, nullptr, def);
     }
 
     memory &memory::write_u8(const uint8_t v)
     {
         insert(sizeof(v));
-        WriteInt(data(), v, endian);
+        WriteInt(get(), v, endian);
         return *this;
     }
 
     int8_t memory::read_s8(const int8_t def)
     {
-        return ReadInt<int8_t>(data(), endian, &position, def);
+        return ReadInt<int8_t>(get(), endian, &position, def);
     }
 
     int8_t memory::peek_s8(const int8_t def) const
     {
-        return ReadInt<int8_t>(data(), endian, nullptr, def);
+        return ReadInt<int8_t>(get(), endian, nullptr, def);
     }
 
     memory &memory::write_s8(const int8_t v)
     {
         insert(sizeof(v));
-        WriteInt(data(), v, endian);
+        WriteInt(get(), v, endian);
         return *this;
     }
 
     uint16_t memory::read_u16(const uint16_t def)
     {
-        return ReadInt<uint16_t>(data(), endian, &position, def);
+        return ReadInt<uint16_t>(get(), endian, &position, def);
     }
 
     uint16_t memory::peek_u16(const uint16_t def) const
     {
-        return ReadInt<uint16_t>(data(), endian, nullptr, def);
+        return ReadInt<uint16_t>(get(), endian, nullptr, def);
     }
 
     memory &memory::write_u16(const uint16_t v)
     {
         insert(sizeof(v));
-        WriteInt(data(), v, endian);
+        WriteInt(get(), v, endian);
         return *this;
     }
 
     int16_t memory::read_s16(const int16_t def)
     {
-        return ReadInt<int16_t>(data(), endian, &position, def);
+        return ReadInt<int16_t>(get(), endian, &position, def);
     }
 
     int16_t memory::peek_s16(const int16_t def) const
     {
-        return ReadInt<int16_t>(data(), endian, nullptr, def);
+        return ReadInt<int16_t>(get(), endian, nullptr, def);
     }
 
     memory &memory::write_s16(const int16_t v)
     {
         insert(sizeof(v));
-        WriteInt(data(), v, endian);
+        WriteInt(get(), v, endian);
         return *this;
     }
 
     uint32_t memory::read_u32(const uint32_t def)
     {
-        return ReadInt<uint32_t>(data(), endian, &position, def);
+        return ReadInt<uint32_t>(get(), endian, &position, def);
     }
 
     uint32_t memory::peek_u32(const uint32_t def) const
     {
-        return ReadInt<uint32_t>(data(), endian, nullptr, def);
+        return ReadInt<uint32_t>(get(), endian, nullptr, def);
     }
 
     memory &memory::write_u32(const uint32_t v)
     {
         insert(sizeof(v));
-        WriteInt(data(), v, endian);
+        WriteInt(get(), v, endian);
         return *this;
     }
 
     int32_t memory::read_s32(const int32_t def)
     {
-        return ReadInt<int32_t>(data(), endian, &position, def);
+        return ReadInt<int32_t>(get(), endian, &position, def);
     }
 
     int32_t memory::peek_s32(const int32_t def) const
     {
-        return ReadInt<int32_t>(data(), endian, nullptr, def);
+        return ReadInt<int32_t>(get(), endian, nullptr, def);
     }
 
     memory &memory::write_s32(const int32_t v)
     {
         insert(sizeof(v));
-        WriteInt(data(), v, endian);
+        WriteInt(get(), v, endian);
         return *this;
     }
 
     #if UINTMAX_MAX > 0xFFFFFFFF
     uint64_t memory::read_u64(const uint64_t def)
     {
-        return ReadInt<uint64_t>(data(), endian, &position, def);
+        return ReadInt<uint64_t>(get(), endian, &position, def);
     }
 
     uint64_t memory::peek_u64(const uint64_t def) const
     {
-        return ReadInt<uint64_t>(data(), endian, nullptr, def);
+        return ReadInt<uint64_t>(get(), endian, nullptr, def);
     }
 
     memory &memory::write_u64(const uint64_t v)
     {
         insert(sizeof(v));
-        WriteInt(data(), v, endian);
+        WriteInt(get(), v, endian);
         return *this;
     }
 
     int64_t memory::read_s64(const int64_t def)
     {
-        return ReadInt<int64_t>(data(), endian, &position, def);
+        return ReadInt<int64_t>(get(), endian, &position, def);
     }
 
     int64_t memory::peek_s64(const int64_t def) const
     {
-        return ReadInt<int64_t>(data(), endian, nullptr, def);
+        return ReadInt<int64_t>(get(), endian, nullptr, def);
     }
 
     memory &memory::write_s64(const uint64_t v)
     {
         insert(sizeof(v));
-        WriteInt(data(), v, endian);
+        WriteInt(get(), v, endian);
         return *this;
     }
 
