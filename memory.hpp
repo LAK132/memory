@@ -1,5 +1,5 @@
-#ifndef LAK_MEMORY_H
-#define LAK_MEMORY_H
+#ifndef LAK_MEMORY_HPP
+#define LAK_MEMORY_HPP
 
 #include <stdint.h>
 #include <vector>
@@ -120,11 +120,11 @@ namespace lak
     };
 }
 
-#endif // LAK_MEMORY_H
+#endif // LAK_MEMORY_HPP
 
-#ifdef LAK_MEMORY_IMPL_H
-#ifndef LAK_MEMORY_HAS_IMPL_H
-#define LAK_MEMORY_HAS_IMPL_H
+#ifdef LAK_MEMORY_IMPL_HPP
+#ifndef LAK_MEMORY_HAS_IMPL_HPP
+#define LAK_MEMORY_HAS_IMPL_HPP
 
 #include <cstring>
 #include <algorithm>
@@ -738,5 +738,5 @@ namespace lak
     #endif
 }
 
-#endif // LAK_MEMORY_HAS_IMPL_H
-#endif // LAK_MEMORY_IMPL_H
+#endif // LAK_MEMORY_HAS_IMPL_HPP
+#endif // LAK_MEMORY_IMPL_HPP
