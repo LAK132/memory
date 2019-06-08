@@ -5,6 +5,14 @@
 #include <vector>
 #include <string>
 
+// wtf windows???
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
+
 namespace lak
 {
     struct memory
@@ -49,7 +57,7 @@ namespace lak
         std::vector<uint8_t> read(size_t from, size_t count) const;
         std::vector<uint8_t> read_range(size_t mark) const;
         std::vector<uint8_t> read_range(size_t from, size_t to) const;
-        memory &write(std::vector<uint8_t> &bytes);
+        memory &write(const std::vector<uint8_t> &bytes);
         memory &write(const memory &other);
 
         // ASCII
@@ -422,7 +430,7 @@ namespace lak
         return std::vector<uint8_t>(_begin, _end);
     }
 
-    memory &memory::write(std::vector<uint8_t> &bytes)
+    memory &memory::write(const std::vector<uint8_t> &bytes)
     {
         insert(bytes.size());
         std::memcpy(get(), bytes.data(), bytes.size());
