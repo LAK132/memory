@@ -26,7 +26,7 @@ namespace lak
         endian_t endian = endian_t::NATIVE;
 
         memory() = default;
-        memory(const std::vector<uint8_t> &mem);
+        memory(const std::vector<uint8_t> &mem, size_t pos = 0);
         memory(const memory &other);
         memory &operator=(const std::vector<uint8_t> &mem);
         memory &operator=(const memory &other);
@@ -263,8 +263,8 @@ namespace lak
         #endif
     }
 
-    memory::memory(const std::vector<uint8_t> &mem)
-    : _data(mem) {}
+    memory::memory(const std::vector<uint8_t> &mem, size_t pos)
+    : _data(mem), position(pos) {}
 
     memory::memory(const memory &other)
     : _data(other._data), position(other.position), endian(other.endian) {}
@@ -272,6 +272,7 @@ namespace lak
     memory &memory::operator=(const std::vector<uint8_t> &mem)
     {
         _data = mem;
+        position = 0;
         return *this;
     }
 
