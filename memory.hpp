@@ -49,7 +49,8 @@ namespace lak
         memory &insert(size_t count);
         memory &insert(size_t count, uint8_t fill);
         memory &clear();
-        memory &seek(const size_t to);
+        memory &seek(size_t to);
+        memory &skip(size_t amount);
         uint8_t *get();
         const uint8_t *get() const;
 
@@ -382,9 +383,15 @@ namespace lak
         return *this;
     }
 
-    memory &memory::seek(const size_t to)
+    memory &memory::seek(size_t to)
     {
-        position = std::min(_data.size(), to);
+        position = to;
+        return *this;
+    }
+
+    memory &memory::skip(size_t amount)
+    {
+        position += amount;
         return *this;
     }
 
