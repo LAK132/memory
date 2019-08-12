@@ -187,10 +187,17 @@ namespace lak
 
             const CHAR *_begin = reinterpret_cast<const CHAR*>(begin);
             const CHAR *_end = reinterpret_cast<const CHAR*>(end);
-            end = reinterpret_cast<const uint8_t*>(_end = std::find(_begin, _end, 0));
+            const CHAR *_end2 = std::find(_begin, _end, 0);
+            end = reinterpret_cast<const uint8_t*>(_end2);
 
             if (position != nullptr)
+            {
                 *position += static_cast<size_t>(end - begin);
+                if (_end2 < _end && *_end2 == 0)
+                    *position += sizeof(CHAR);
+            }
+
+            _end = _end2;
 
             if (endian == memory::endian_t::NATIVE)
             {
